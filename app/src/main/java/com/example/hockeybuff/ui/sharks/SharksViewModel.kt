@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hockeybuff.data.HockeyRepository
 import com.example.hockeybuff.model.NewsItem
+import com.example.hockeybuff.model.OlympicEvent
 import com.example.hockeybuff.model.Score
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,6 +14,7 @@ import kotlinx.coroutines.launch
 data class SharksUiState(
     val scores: List<Score> = emptyList(),
     val news: List<NewsItem> = emptyList(),
+    val olympicEvents: List<OlympicEvent> = emptyList(),
     val isLoading: Boolean = false,
     val error: String? = null
 )
@@ -35,6 +37,7 @@ class SharksViewModel : ViewModel() {
                 _uiState.value = SharksUiState(
                     scores = hockeyRepository.getScores(),
                     news = hockeyRepository.getNews(),
+                    olympicEvents = hockeyRepository.getOlympicIceHockeyEvents(),
                     isLoading = false
                 )
             } catch (e: Exception) {

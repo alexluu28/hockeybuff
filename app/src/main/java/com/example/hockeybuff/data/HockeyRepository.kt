@@ -1,6 +1,7 @@
 package com.example.hockeybuff.data
 
 import com.example.hockeybuff.model.NewsItem
+import com.example.hockeybuff.model.OlympicEvent
 import com.example.hockeybuff.model.Score
 import com.example.hockeybuff.network.HockeyApi
 import com.example.hockeybuff.network.asNewsItems
@@ -13,5 +14,9 @@ class HockeyRepository {
 
     suspend fun getNews(): List<NewsItem> {
         return HockeyApi.retrofitService.getNews().asNewsItems()
+    }
+
+    suspend fun getOlympicIceHockeyEvents(): List<OlympicEvent> {
+        return OlympicData.events
     }
 }

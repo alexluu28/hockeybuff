@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.hockeybuff.model.NewsItem
+import com.example.hockeybuff.model.OlympicEvent
 import com.example.hockeybuff.model.Score
 import com.example.hockeybuff.model.Team
 import java.text.SimpleDateFormat
@@ -68,11 +69,33 @@ fun SharksScreen(
                 ScoreCard(score = it, onScoreClick = onScoreClick)
             }
             item {
+                Text(text = "2026 Winter Olympics", style = MaterialTheme.typography.headlineMedium, modifier = Modifier.padding(top = 16.dp))
+            }
+            items(uiState.olympicEvents) {
+                OlympicEventCard(event = it)
+            }
+            item {
                 Text(text = "News", style = MaterialTheme.typography.headlineMedium, modifier = Modifier.padding(top = 16.dp))
             }
             items(uiState.news) {
                 NewsCard(newsItem = it)
             }
+        }
+    }
+}
+
+@Composable
+fun OlympicEventCard(event: OlympicEvent) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(text = event.description ?: "", style = MaterialTheme.typography.bodyLarge)
+            Text(text = "Start: ${event.start_date ?: ""}", style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 4.dp))
+            Text(text = "End: ${event.end_date ?: ""}", style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 4.dp))
         }
     }
 }

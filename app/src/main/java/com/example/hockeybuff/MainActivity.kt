@@ -30,10 +30,12 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.padding(innerPadding)
                     ) {
                         composable("sharks") {
-                            SharksScreen(onScoreClick = { score ->
-                                navController.currentBackStackEntry?.savedStateHandle?.set("score", score)
-                                navController.navigate("boxscore")
-                            })
+                            SharksScreen(
+                                onScoreClick = { score ->
+                                    navController.currentBackStackEntry?.savedStateHandle?.set("score", score)
+                                    navController.navigate("boxscore")
+                                }
+                            )
                         }
                         composable("boxscore") { 
                             val score = navController.previousBackStackEntry?.savedStateHandle?.get<Score>("score")
