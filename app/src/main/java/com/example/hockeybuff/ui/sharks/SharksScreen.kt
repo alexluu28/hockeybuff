@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -32,7 +34,6 @@ import coil.compose.AsyncImage
 import com.example.hockeybuff.model.NewsItem
 import com.example.hockeybuff.model.OlympicEvent
 import com.example.hockeybuff.model.Score
-import com.example.hockeybuff.model.Team
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -63,19 +64,27 @@ fun SharksScreen(
                 )
             }
             item {
-                Text(text = "Scores", style = MaterialTheme.typography.headlineMedium)
-            }
-            items(uiState.scores.filter { it.homeTeam.name == "San Jose Sharks" || it.awayTeam.name == "San Jose Sharks" }) {
-                ScoreCard(score = it, onScoreClick = onScoreClick)
+                Text(text = "Scores", style = MaterialTheme.typography.headlineMedium, modifier = Modifier.padding(bottom = 8.dp))
             }
             item {
-                Text(text = "2026 Winter Olympics", style = MaterialTheme.typography.headlineMedium, modifier = Modifier.padding(top = 16.dp))
-            }
-            items(uiState.olympicEvents) {
-                OlympicEventCard(event = it)
+                LazyRow {
+                    items(uiState.scores.filter { it.homeTeam.name == "San Jose Sharks" || it.awayTeam.name == "San Jose Sharks" }) {
+                        ScoreCard(score = it, onScoreClick = onScoreClick)
+                    }
+                }
             }
             item {
-                Text(text = "News", style = MaterialTheme.typography.headlineMedium, modifier = Modifier.padding(top = 16.dp))
+                Text(text = "2026 Winter Olympics", style = MaterialTheme.typography.headlineMedium, modifier = Modifier.padding(top = 16.dp, bottom = 8.dp))
+            }
+            item {
+                LazyRow {
+                    items(uiState.olympicEvents) {
+                        OlympicEventCard(event = it)
+                    }
+                }
+            }
+            item {
+                Text(text = "News", style = MaterialTheme.typography.headlineMedium, modifier = Modifier.padding(top = 16.dp, bottom = 8.dp))
             }
             items(uiState.news) {
                 NewsCard(newsItem = it)
@@ -88,8 +97,8 @@ fun SharksScreen(
 fun OlympicEventCard(event: OlympicEvent) {
     Card(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
+            .width(300.dp)
+            .padding(end = 16.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
@@ -113,7 +122,7 @@ fun ScoreCard(score: Score, onScoreClick: (Score) -> Unit) {
     val sharksScore = if (sharksAreHome) score.homeScore else score.awayScore
 
     Card(
-        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp).clickable { onScoreClick(score) },
+        modifier = Modifier.width(300.dp).padding(end = 16.dp).clickable { onScoreClick(score) },
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
